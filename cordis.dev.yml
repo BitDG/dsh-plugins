@@ -1,0 +1,40 @@
+# DSHP 开发 overlay：追加到 dsh web profile 之上。
+#
+# 用法（DSH checkout 根目录）：
+#   pnpm dsh web --patch <collection-root>\cordis.dev.yml
+# 或仓库内：node scripts/dev.mjs
+#
+# 层顺序（后应用者胜）：profile bundles → profile cordis.patch.yml
+#   → $DSH_HOME/cordis.patch.yml → 每个 --patch overlay（按 argv 顺序）
+# patch 按行 id 覆盖整行 config。这里固定开发端口，避免与正式 3080 实例冲突。
+
+- id: webserver
+  config:
+    host: 127.0.0.1
+    port: 3081
+
+# 把 plugins/ 下的插件以源码形式挂载（name 相对本文件所在目录）。
+# 新增插件：复制 templates/plugin 到 plugins/<名>，然后在下面加一行。
+- insert:
+    - id: dshp-project-actions
+      name: './plugins/project-actions/src/index.ts'
+    - id: workflow-governance
+      name: './plugins/workflow-governance/src/index.ts'
+      config:
+        storageRoot: '__DSHP_WORKFLOW_STORAGE_ROOT__'
+        projectDirectory: '.dsh/governance'
+        platformFile: 'platform.md'
+        projectFile: 'project.md'
+        experienceDirectory: 'experience'
+        maxPlatformBytes: 32768
+        maxProjectBytes: 32768
+        maxExperienceBytes: 16384
+        maxInjectedExperiences: 8
+        maxInjectedExperienceBytes: 16384
+        allowRemoteWrite: false
+        enableVerificationTool: true
+        enableExperienceGeneration: true
+        injectIntoSubagents: true
+        injectOnResume: false
+    - id: dship-model-radar
+      name: './plugins/model-radar/src/index.ts'

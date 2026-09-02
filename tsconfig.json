@@ -1,0 +1,28 @@
+{
+  // 继承 DSH checkout 的基准配置：paths 映射随继承生效（相对 base 声明处解析 = checkout 根），
+  // 因此 @deepseek-ai/cordis → vendor/cordis/src、@deepseek-ai/dsh-tools → packages/core/tools/src
+  // 等全部可用（tsc 类型检查与 tsx 运行时加载都按它解析）。
+  "extends": "../KB/deepseek-harness/tsconfig.base.json",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "incremental": false,
+    "noEmit": true,
+    // 本仓库是"被解析方"。vendored/包源码在 checkout 里用项目引用各自编译，不接受本工程的
+    // 严格选项联检；以下选项在 checkout 内部编译时默认宽松，这里对齐，避免误报。
+    "exactOptionalPropertyTypes": false,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": false,
+    "noImplicitThis": false,
+    // vendored 源码对 noImplicitAny 也不干净（symbol 索引等）；本仓库代码仍显式标注类型，
+    // 插件 API（ctx / Config / defineTool args）全部有类型，严格度损失仅限被连带检查的依赖源码。
+    "noImplicitAny": false,
+    // vendored 源码对 noImplicitAny 也不干净（symbol 索引类型等），对齐关闭。
+    // 本仓库代码仍显式标注类型，插件 API（ctx/Config）全部有类型。
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  },
+  "include": ["plugins/**/*", "templates/**/*"]
+}

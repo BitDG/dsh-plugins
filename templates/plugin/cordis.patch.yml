@@ -1,0 +1,7 @@
+# 安装形态：本包被 'dsh plugin --profile <名> add <路径>' 装入 profile 后，这一层生效。
+# 开发形态：在仓库根 cordis.dev.yml 的 insert 段按源码路径引用：
+#   - id: __NAME__
+#     name: './plugins/__NAME__/src/index.ts'
+- insert:
+    - id: __NAME__
+      name: '@dship/__NAME__'

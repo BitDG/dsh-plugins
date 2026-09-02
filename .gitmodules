@@ -1,0 +1,15 @@
+[submodule "plugins/model-radar"]
+	path = plugins/model-radar
+	url = https://github.com/BitDG/dsh-model-radar.git
+[submodule "plugins/project-actions"]
+	path = plugins/project-actions
+	url = https://github.com/BitDG/dsh-project-actions.git
+[submodule "plugins/workflow-governance"]
+	path = plugins/workflow-governance
+	url = https://github.com/BitDG/dsh-workflow-governance.git
+[submodule "dsh-omniroute-persistent"]
+	path = dsh-omniroute-persistent
+	url = https://github.com/BitDG/dsh-omniroute-persistent.git
+[submodule "plugins/cloud-model-providers"]
+	path = plugins/cloud-model-providers
+	url = https://github.com/BitDG/dsh-cloud-model-providers.git

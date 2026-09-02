@@ -1,0 +1,17 @@
+{
+  "name": "dshp",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Public Git collection for independently versioned DeepSeek Harness plugins",
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BitDG/dsh-plugins.git"
+  },
+  "scripts": {
+    "setup": "powershell -ExecutionPolicy Bypass -File scripts/setup.ps1",
+    "dev": "node scripts/dev.mjs",
+    "verify": "powershell -ExecutionPolicy Bypass -File scripts/verify-collection.ps1"
+  }
+}
