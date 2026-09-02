@@ -7,9 +7,12 @@
 [submodule "plugins/workflow-governance"]
 	path = plugins/workflow-governance
 	url = https://github.com/BitDG/dsh-workflow-governance.git
-[submodule "dsh-omniroute-persistent"]
-	path = dsh-omniroute-persistent
+[submodule "plugins/omniroute-persistent"]
+	path = plugins/omniroute-persistent
 	url = https://github.com/BitDG/dsh-omniroute-persistent.git
 [submodule "plugins/cloud-model-providers"]
 	path = plugins/cloud-model-providers
 	url = https://github.com/BitDG/dsh-cloud-model-providers.git
+[submodule "plugins/tablerag"]
+	path = plugins/tablerag
+	url = https://github.com/BitDG/dsh-TableRAG.git

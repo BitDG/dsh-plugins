@@ -9,7 +9,15 @@ $projects = @(
   'plugins/project-actions',
   'plugins/workflow-governance',
   'plugins/cloud-model-providers',
-  'dsh-omniroute-persistent'
+  'plugins/omniroute-persistent',
+  'plugins/tablerag'
+)
+$installProjects = @(
+  'plugins/model-radar',
+  'plugins/project-actions',
+  'plugins/workflow-governance',
+  'plugins/cloud-model-providers',
+  'plugins/omniroute-persistent'
 )
 
 git -C $repoRoot submodule sync --recursive
@@ -22,7 +30,7 @@ if ($SkipInstall) {
   exit 0
 }
 
-foreach ($relativePath in $projects) {
+foreach ($relativePath in $installProjects) {
   $project = Join-Path $repoRoot $relativePath
   $lockfile = Join-Path $project 'pnpm-lock.yaml'
   if (-not (Test-Path -LiteralPath $lockfile)) {

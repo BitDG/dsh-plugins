@@ -10,9 +10,8 @@
 | `plugins/project-actions` | `BitDG/dsh-project-actions` | 工作区项目快捷操作 |
 | `plugins/workflow-governance` | `BitDG/dsh-workflow-governance` | 工作流约束、证据与经验管理 |
 | `plugins/cloud-model-providers` | `BitDG/dsh-cloud-model-providers` | Ant Digital MaaS 与 NVIDIA NIM 模型路由 |
-| `dsh-omniroute-persistent` | `BitDG/dsh-omniroute-persistent` | OmniRoute 本地生命周期与持久化接入 |
-
-`dsh-omniroute-persistent` 暂时保留在集合根目录，以兼容已有的本地 `file:` 安装路径。
+| `plugins/omniroute-persistent` | `BitDG/dsh-omniroute-persistent` | OmniRoute 本地生命周期与持久化接入 |
+| `plugins/tablerag` | `BitDG/dsh-TableRAG` | 将一个只读 TableRAG 目录接入 DSH MCP 工具注册表 |
 
 ## 获取完整集合
 
@@ -31,7 +30,7 @@ git submodule update --init --recursive
 pnpm run setup
 ```
 
-`setup` 会在每个插件仓库中使用其锁文件安装开发依赖，不会在集合根目录生成共享依赖树。
+`setup` 会在声明了开发锁文件的插件仓库中安装依赖；纯配置 bundle 不需要依赖安装。集合根目录不会生成共享依赖树。
 
 ## 开发运行
 
@@ -42,7 +41,7 @@ $env:DSH_ROOT = 'F:\path\to\deepseek-harness'
 pnpm run dev
 ```
 
-开发脚本会从 [`cordis.dev.yml`](./cordis.dev.yml) 生成忽略提交的本机 overlay，把治理数据定向到集合的 `tmp/`，并默认监听 `127.0.0.1:3081`。端口被占用时，可在运行前设置 `$env:DSHP_DEV_PORT = '3082'`。云模型路由和 OmniRoute 替换包不会被自动启用，需要按各自仓库 README 显式安装。
+开发脚本会从 [`cordis.dev.yml`](./cordis.dev.yml) 生成忽略提交的本机 overlay，把治理数据定向到集合的 `tmp/`，并默认监听 `127.0.0.1:3081`。端口被占用时，可在运行前设置 `$env:DSHP_DEV_PORT = '3082'`。云模型路由、OmniRoute 替换包和 TableRAG 目录连接不会被自动启用，需要按各自仓库 README 显式安装和配置。
 
 ## 验证
 

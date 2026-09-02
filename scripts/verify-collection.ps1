@@ -5,7 +5,8 @@ $projects = @(
   'plugins/project-actions',
   'plugins/workflow-governance',
   'plugins/cloud-model-providers',
-  'dsh-omniroute-persistent'
+  'plugins/omniroute-persistent',
+  'plugins/tablerag'
 )
 
 $gitmodules = Join-Path $repoRoot '.gitmodules'
