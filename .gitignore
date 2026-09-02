@@ -13,6 +13,7 @@ CLAUDE.md
 # 本地临时/验证
 tmp/
 outputs/
+cordis.dev.generated.yml
 
 # 日志与系统文件
 *.log

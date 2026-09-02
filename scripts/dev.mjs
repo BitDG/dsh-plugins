@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join, resolve } from 'node:path'
 
@@ -12,7 +12,7 @@ for (let index = 0; index < args.length; index += 1) {
 }
 
 const overlay = join(repoRoot, 'cordis.dev.yml')
-const generatedOverlay = join(repoRoot, 'tmp', 'cordis.dev.generated.yml')
+const generatedOverlay = join(repoRoot, 'cordis.dev.generated.yml')
 const harnessPackage = join(dshRoot, 'package.json')
 const requiredProjects = [
   'plugins/model-radar',
@@ -41,7 +41,6 @@ if (!overlaySource.includes('__DSHP_WORKFLOW_STORAGE_ROOT__')) {
   console.error('[dev] overlay storage placeholder is missing')
   process.exit(1)
 }
-mkdirSync(dirname(generatedOverlay), { recursive: true })
 writeFileSync(
   generatedOverlay,
   overlaySource.replace('__DSHP_WORKFLOW_STORAGE_ROOT__', storageRoot),
