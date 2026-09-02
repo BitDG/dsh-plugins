@@ -42,7 +42,7 @@ $env:DSH_ROOT = 'F:\path\to\deepseek-harness'
 pnpm run dev
 ```
 
-开发脚本会从 [`cordis.dev.yml`](./cordis.dev.yml) 生成忽略提交的本机 overlay，把治理数据定向到集合的 `tmp/`，并监听 `127.0.0.1:3081`。云模型路由和 OmniRoute 替换包不会被自动启用，需要按各自仓库 README 显式安装。
+开发脚本会从 [`cordis.dev.yml`](./cordis.dev.yml) 生成忽略提交的本机 overlay，把治理数据定向到集合的 `tmp/`，并默认监听 `127.0.0.1:3081`。端口被占用时，可在运行前设置 `$env:DSHP_DEV_PORT = '3082'`。云模型路由和 OmniRoute 替换包不会被自动启用，需要按各自仓库 README 显式安装。
 
 ## 验证
 

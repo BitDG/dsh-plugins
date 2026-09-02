@@ -6,12 +6,12 @@
 #
 # 层顺序（后应用者胜）：profile bundles → profile cordis.patch.yml
 #   → $DSH_HOME/cordis.patch.yml → 每个 --patch overlay（按 argv 顺序）
-# patch 按行 id 覆盖整行 config。这里固定开发端口，避免与正式 3080 实例冲突。
+# patch 按行 id 覆盖整行 config。开发脚本默认使用 3081，也可通过 DSHP_DEV_PORT 覆盖。
 
 - id: webserver
   config:
     host: 127.0.0.1
-    port: 3081
+    port: __DSHP_DEV_PORT__
 
 # 把 plugins/ 下的插件以源码形式挂载（name 相对本文件所在目录）。
 # 新增插件：复制 templates/plugin 到 plugins/<名>，然后在下面加一行。

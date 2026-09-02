@@ -14,6 +14,7 @@ for (let index = 0; index < args.length; index += 1) {
 const overlay = join(repoRoot, 'cordis.dev.yml')
 const generatedOverlay = join(repoRoot, 'cordis.dev.generated.yml')
 const harnessPackage = join(dshRoot, 'package.json')
+const devPort = Number(process.env.DSHP_DEV_PORT ?? '3081')
 const requiredProjects = [
   'plugins/model-radar',
   'plugins/project-actions',
@@ -28,6 +29,10 @@ if (!existsSync(harnessPackage)) {
   console.error(`[dev] invalid DSH_ROOT: ${dshRoot}`)
   process.exit(1)
 }
+if (!Number.isInteger(devPort) || devPort < 1 || devPort > 65535) {
+  console.error('[dev] DSHP_DEV_PORT must be an integer between 1 and 65535')
+  process.exit(1)
+}
 for (const project of requiredProjects) {
   if (!existsSync(join(repoRoot, project, 'node_modules'))) {
     console.error(`[dev] missing dependencies for ${project}; run: pnpm run setup`)
@@ -37,22 +42,34 @@ for (const project of requiredProjects) {
 
 const storageRoot = join(repoRoot, 'tmp', 'workflow-governance-data').replaceAll('\\', '/')
 const overlaySource = readFileSync(overlay, 'utf8')
-if (!overlaySource.includes('__DSHP_WORKFLOW_STORAGE_ROOT__')) {
-  console.error('[dev] overlay storage placeholder is missing')
+if (
+  !overlaySource.includes('__DSHP_WORKFLOW_STORAGE_ROOT__') ||
+  !overlaySource.includes('__DSHP_DEV_PORT__')
+) {
+  console.error('[dev] overlay storage or port placeholder is missing')
   process.exit(1)
 }
 writeFileSync(
   generatedOverlay,
-  overlaySource.replace('__DSHP_WORKFLOW_STORAGE_ROOT__', storageRoot),
+  overlaySource
+    .replace('__DSHP_WORKFLOW_STORAGE_ROOT__', storageRoot)
+    .replace('__DSHP_DEV_PORT__', String(devPort)),
   'utf8',
 )
 
-const corepack = process.platform === 'win32' ? 'corepack.CMD' : 'corepack'
 console.log(`[dev] DSH root : ${dshRoot}`)
 console.log(`[dev] overlay  : ${generatedOverlay}`)
-const child = spawn(corepack, ['pnpm', 'dsh', 'web', '--patch', generatedOverlay], {
+console.log(`[dev] endpoint : http://127.0.0.1:${devPort}`)
+const childOptions = {
   cwd: dshRoot,
   stdio: 'inherit',
   env: { ...process.env },
-})
+}
+const child = process.platform === 'win32'
+  ? spawn(
+      process.env.ComSpec ?? 'cmd.exe',
+      ['/d', '/s', '/c', `corepack pnpm dsh web --patch "${generatedOverlay.replaceAll('"', '""')}"`],
+      { ...childOptions, windowsVerbatimArguments: true },
+    )
+  : spawn('corepack', ['pnpm', 'dsh', 'web', '--patch', generatedOverlay], childOptions)
 child.on('exit', code => process.exit(code ?? 0))
