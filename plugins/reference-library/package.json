@@ -1,0 +1,75 @@
+{
+  "name": "@dship/reference-library",
+  "version": "0.6.8",
+  "description": "Unified DSH-native data cards for local CodePen and GitHub plus Pinterest and Z-Library references",
+  "type": "module",
+  "dependencies": {
+    "@deepseek-ai/schemastery": "^3.18.2"
+  },
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": ["lib", "chrome-extension", "cordis.patch.yml", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run tests",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "verify": "pnpm run typecheck && pnpm run test && pnpm run build && pnpm pack --dry-run"
+  },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-input-trigger",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-settings-plugins"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.2",
+    "@deepseek-ai/dsh-api-remotes": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-api-settings-controller": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-locale": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-chat": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-conversation": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-input-trigger": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-renderer": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-settings": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-settings-plugins": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-client-ui-slots": "0.1.2-alpha.3",
+    "@deepseek-ai/dsh-settings": "0.1.2-alpha.3",
+    "@types/node": "^22.20.0",
+    "@types/react": "^19.2.2",
+    "clsx": "^2.1.1",
+    "react": "^19.2.0",
+    "tsdown": "^0.22.2",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "keywords": ["dsh-plugin", "deepseek-harness", "codepen", "pinterest", "github", "zlibrary", "references", "online"],
+  "author": "BitDG",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BitDG/dsh-plugins.git",
+    "directory": "plugins/reference-library"
+  },
+  "bugs": { "url": "https://github.com/BitDG/dsh-plugins/issues" },
+  "homepage": "https://github.com/BitDG/dsh-plugins/tree/main/plugins/reference-library#readme",
+  "publishConfig": { "access": "public" },
+  "engines": { "node": "^22.19.0 || >=24.0.0" },
+  "packageManager": "pnpm@11.7.0"
+}
