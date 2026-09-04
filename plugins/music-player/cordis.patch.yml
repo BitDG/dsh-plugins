@@ -1,0 +1,3 @@
+- insert:
+    - id: dship-music-player
+      name: '@dship/music-player'

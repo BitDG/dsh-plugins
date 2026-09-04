@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "DSH Pinterest Reference Bridge",
+  "version": "0.6.7",
+  "description": "Imports visible Pinterest Pin cards into the local DSH reference library without reading cookies or browser profile data.",
+  "permissions": [],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://127.0.0.1/*",
+        "http://localhost/*"
+      ],
+      "js": ["dsh.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://pinterest.com/*",
+        "https://*.pinterest.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
